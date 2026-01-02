@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/justinm35/flyctl/domain"
+	"github.com/spf13/viper"
 )
 
 const providerName = "rapidgoogleflights"
@@ -54,7 +55,8 @@ func SearchFlights(input GetSearchResultsInput) ([]domain.FlightOffer, error) {
 	u.RawQuery = q.Encode()
 	req, err := http.NewRequest("GET", u.String(), nil)
 
-	req.Header.Add("x-rapidapi-key", "<Your Api Key>")
+	rapid_api_key := viper.GetString("rapid_google_api_key")
+	req.Header.Add("x-rapidapi-key", rapid_api_key)
 	req.Header.Set("x-rapidapi-host", "google-flights2.p.rapidapi.com")
 
 	resp, err := client.Do(req)

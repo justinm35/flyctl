@@ -5,6 +5,7 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/justinm35/flyctl/domain"
+	"github.com/justinm35/flyctl/utils"
 )
 
 type ResultsState struct {
@@ -23,7 +24,7 @@ func (resultsState *ResultsState) buildTable() {
 		{Title: "Carrier", Width: 20},
 		{Title: "Seats", Width: 4},
 	}
-	rows := formatResponseData(resultsState.offers)
+	rows := utils.FormatResponseData(resultsState.offers)
 
 	t := table.New(
 		table.WithColumns(columns),

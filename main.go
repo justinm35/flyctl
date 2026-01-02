@@ -16,6 +16,7 @@ const (
 )
 
 func main() {
+	InitConfig()
 	m := NewModel()
 	_, err := tea.NewProgram(m, tea.WithAltScreen()).Run()
 	if err != nil {

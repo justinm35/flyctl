@@ -15,6 +15,7 @@ import (
 	"time"
 
 	"github.com/justinm35/flyctl/domain"
+	"github.com/spf13/viper"
 )
 
 const providerName = "amadeus"
@@ -117,8 +118,8 @@ func adaptSearchFlightResponse(data SearchFlightResp) ([]domain.FlightOffer, err
 
 func getAmadeusBearer() string {
 	baseURL := "https://test.api.amadeus.com/v1/security/oauth2/token"
-	apiKey := "<Your API Key>"
-	apiSecret := "<Your API Secret>"
+	apiKey := viper.GetString("amadeus_api_key")
+	apiSecret := viper.GetString("amadeus_api_secret")
 
 	client := &http.Client{}
 
