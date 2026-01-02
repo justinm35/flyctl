@@ -17,6 +17,7 @@ const (
 
 func main() {
 	InitConfig()
+
 	m := NewModel()
 	_, err := tea.NewProgram(m, tea.WithAltScreen()).Run()
 	if err != nil {
@@ -59,7 +60,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	switch msg := msg.(type) {
 	case searchResultsMsg:
-		// m.results.loading = false
+		m.screenSearch.loading = false
 		m.screenResults.offers = msg.offers
 		m.screenResults.buildTable()
 		m.screen = screenResults

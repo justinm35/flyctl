@@ -1,17 +1,22 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
+	"github.com/charmbracelet/bubbles/spinner"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
 	rapidgoogleflights "github.com/justinm35/flyctl/providers/rapid_google_flights"
 )
 
 type SearchState struct {
-	inputs []textinput.Model
-	focus  int
-	err    string
+	inputs  []textinput.Model
+	loading bool
+	spinner spinner.Model
+	focus   int
+	err     string
 }
 
 func newSearchState() SearchState {
@@ -30,11 +35,17 @@ func newSearchState() SearchState {
 		makeInput("Departure date (YYYY-MM-DD)"),
 	}
 
+	sp := spinner.New()
+	sp.Spinner = spinner.Dot
+	sp.Style = lipgloss.NewStyle().Foreground(lipgloss.Color("205"))
+
 	inputs[0].Focus()
 
 	return SearchState{
-		inputs: inputs,
-		focus:  0,
+		inputs:  inputs,
+		loading: false,
+		spinner: sp,
+		focus:   0,
 	}
 
 }
@@ -43,6 +54,13 @@ func (s SearchState) initCmd() tea.Cmd { return textinput.Blink }
 
 func updateSearch(m Model, msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
+	case spinner.TickMsg:
+		if m.screenSearch.loading {
+			var cmd tea.Cmd
+			m.screenSearch.spinner, cmd = m.screenSearch.spinner.Update(msg)
+			return m, cmd
+		}
+		return m, nil
 	case tea.KeyMsg:
 		switch msg.String() {
 		case "tab", "shift+tab", "up", "down":
@@ -73,7 +91,8 @@ func updateSearch(m Model, msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, nil
 		case "enter":
 			// TODO: Validate input
-			return m, getSearchResultsCmd(m)
+			m.screenSearch.loading = true
+			return m, tea.Batch(m.screenSearch.spinner.Tick, getSearchResultsCmd(m))
 		}
 	}
 	// Let the focused input handle the message
@@ -91,7 +110,11 @@ func viewSeach(m Model) string {
 		s += labels[i] + ":\n" + m.screenSearch.inputs[i].View() + "\n\n"
 	}
 
-	s += "(tab to switch fields, enter next/submit, esc to quit)\n"
+	if m.screenSearch.loading {
+		s += fmt.Sprintf("%s Searcing flights...", m.screenSearch.spinner.View())
+	} else {
+		s += "(tab to switch fields, enter next/submit, esc to quit)\n"
+	}
 	return s
 }
 
