@@ -10,6 +10,7 @@ import (
 	"github.com/charmbracelet/glamour"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/justinm35/flyctl/domain"
+	"github.com/justinm35/flyctl/styles"
 )
 
 type FlightDetailsState struct {
@@ -19,13 +20,7 @@ type FlightDetailsState struct {
 }
 
 func (flightDetailsState *FlightDetailsState) initFlightDetails(selectedOffer domain.FlightOffer) {
-	const width = 200
-	const height = 50
-
-	vp := viewport.New(width, 50)
-	vp.Style = lipgloss.NewStyle().
-		BorderStyle(lipgloss.RoundedBorder()).
-		BorderForeground(lipgloss.Color("62"))
+	vp := viewport.New(50, 50)
 
 	flightDetailsState.viewport = vp
 
@@ -33,7 +28,6 @@ func (flightDetailsState *FlightDetailsState) initFlightDetails(selectedOffer do
 }
 
 func newFlightDetailsState() FlightDetailsState {
-
 	return FlightDetailsState{}
 }
 
@@ -41,16 +35,16 @@ func updateFlightDetails(m Model, msg tea.Msg) (tea.Model, tea.Cmd) {
 	var cmd tea.Cmd
 
 	switch msg := msg.(type) {
-	case tea.WindowSizeMsg:
-		headerH := 1
-		footerH := 1
-		verticalPadding := 0
-		m.screenFlightDetails.viewport.Width = msg.Width
-		m.screenFlightDetails.viewport.Height = msg.Height - headerH - footerH - verticalPadding
-		if m.screenFlightDetails.viewport.Height < 1 {
-			m.screenFlightDetails.viewport.Height = 1
-		}
-		return m, nil
+	// case tea.WindowSizeMsg:
+	// 	headerH := 1
+	// 	footerH := 1
+	// 	verticalPadding := 0
+	// 	m.screenFlightDetails.viewport.Width = msg.Width
+	// 	m.screenFlightDetails.viewport.Height = msg.Height - headerH - footerH - verticalPadding
+	// 	if m.screenFlightDetails.viewport.Height < 1 {
+	// 		m.screenFlightDetails.viewport.Height = 1
+	// 	}
+	// 	return m, nil
 	case tea.KeyMsg:
 		switch msg.String() {
 		case "enter":
@@ -65,30 +59,39 @@ func updateFlightDetails(m Model, msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func viewFlightDetails(m Model) string {
-
 	const width = 78
 	const glamourGutter = 2
 	vp := m.screenFlightDetails.viewport
+	halfHeight := (m.height / 2) - 2
 
-	lipGlossRender := lipGlossRender(m.screenFlightDetails.offer)
+	vp.Height = halfHeight
+	vp.Width = m.width / 2
+
+	lipGlossRender := lipGlossRender(m.screenFlightDetails.offer, m.width)
 
 	vp.SetContent(lipGlossRender)
 
 	return vp.View()
 }
-func lipGlossRender(offer domain.FlightOffer) string {
+
+func lipGlossRender(offer domain.FlightOffer, width int) string {
 
 	const dateLayout = "Mon, 02 Jan 2006"
 	const timeLayout = "15:04 MST"
 
-	header := lipgloss.NewStyle().Bold(true).Render("Selected Flights \n")
-	departingFlihtLine := fmt.Sprintf("Price %s\n\n", offer.Segments[0].DepartAt.UTC().Format(dateLayout))
-	totalPriceLine := fmt.Sprintf("Price (%s): %d\n\n", offer.TotalPrice.Currency, offer.TotalPrice.Amount)
+	header := lipgloss.NewStyle().Foreground(styles.NeonPurple).Bold(true).Width(30).Render("[Selected Flight Details] \n")
+	noResults := lipgloss.NewStyle().Foreground(styles.MutedGray).Align(lipgloss.Center).MarginTop(6).Width(width / 2).Render("Search & Select a flight...")
+	if offer.Segments == nil {
+		return fmt.Sprintf("%s \n\n\n %s", header, noResults)
+	}
+
+	departingFlihtLine := fmt.Sprintf("Departure Date: %s", offer.Segments[0].DepartAt.UTC().Format(dateLayout))
+	totalPriceLine := fmt.Sprintf("Price (%s): %d", offer.TotalPrice.Currency, offer.TotalPrice.Amount)
 
 	departingFlight := lipgloss.NewStyle().Render(departingFlihtLine)
 	totalPrice := lipgloss.NewStyle().Render(totalPriceLine)
 
-	spacer := lipgloss.NewStyle().Width(4).Render("") // 4-character gap
+	spacer := lipgloss.NewStyle().Width(6).Render("") // 4-character gap
 
 	departureAndPrice := lipgloss.JoinHorizontal(
 		lipgloss.Left,
@@ -133,10 +136,8 @@ func lipGlossRender(offer domain.FlightOffer) string {
 		return ""
 	}
 
-	footer := lipgloss.NewStyle().Faint(true).Render("b: back")
-
-	fillView := lipgloss.JoinVertical(lipgloss.Left, header, departureAndPrice, routeDetails, footer)
-	return lipgloss.NewStyle().PaddingLeft(4).PaddingRight(4).Render(fillView)
+	fillView := lipgloss.JoinVertical(lipgloss.Left, header, departureAndPrice, routeDetails)
+	return lipgloss.NewStyle().Render(fillView)
 }
 
 func offerMarkdown(offer domain.FlightOffer) string {

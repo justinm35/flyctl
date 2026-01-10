@@ -69,7 +69,7 @@ func FormatResponseData(offers []domain.FlightOffer) []table.Row {
 		carrierString := joinUniqueCarriers(o.Segments)
 
 		// -------- Seats remaining (not in domain yet)
-		seatsRemaining := "-" // you removed it from domain.FlightOffer
+		// seatsRemaining := "-" // you removed it from domain.FlightOffer
 
 		allRows = append(allRows, table.Row{
 			routeString,
@@ -78,7 +78,7 @@ func FormatResponseData(offers []domain.FlightOffer) []table.Row {
 			totalDurationString,
 			totalPrice,
 			carrierString,
-			seatsRemaining,
+			// seatsRemaining,
 		})
 	}
 

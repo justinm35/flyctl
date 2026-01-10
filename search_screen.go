@@ -8,6 +8,7 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 	rapidgoogleflights "github.com/justinm35/flyctl/providers/rapid_google_flights"
+	"github.com/justinm35/flyctl/styles"
 )
 
 type SearchState struct {
@@ -19,19 +20,19 @@ type SearchState struct {
 }
 
 func newSearchState() SearchState {
-	makeInput := func(placeholder string) textinput.Model {
+	makeInput := func(placeholder string, charLimit int) textinput.Model {
 		ti := textinput.New()
 		ti.Placeholder = placeholder
-		ti.Prompt = "> "
-		ti.CharLimit = 64
+		ti.Prompt = ""
+		ti.CharLimit = charLimit
 		ti.Width = 30
 		return ti
 	}
 
 	inputs := []textinput.Model{
-		makeInput("Source IATA (e.g. CPH)"),
-		makeInput("Destination IATA (e.g. YYZ)"),
-		makeInput("Departure date (YYYY-MM-DD)"),
+		makeInput("e.g. CPH", 3),
+		makeInput("e.g. YYZ", 3),
+		makeInput("YYYY-MM-DD", 10),
 	}
 
 	sp := spinner.New()
@@ -106,21 +107,32 @@ func updateSearch(m Model, msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func viewSeach(m Model) string {
-	s := "Flight search\n\n"
 	labels := []string{"From", "To", "Depart", "Return"}
+	s := fmt.Sprintf(
+		`%s
 
-	for i := range m.screenSearch.inputs {
-		s += labels[i] + ":\n" + m.screenSearch.inputs[i].View() + "\n\n"
-	}
+%s  %s
+%s %s
+
+%s
+%s
+`,
+		lipgloss.NewStyle().Foreground(styles.NeonPurple).Bold(true).Width(30).Render("[Flight Search]"),
+		lipgloss.NewStyle().Foreground(styles.HotPink).Width(30).Render(labels[0]),
+		lipgloss.NewStyle().Foreground(styles.HotPink).Width(30).Render(labels[1]),
+		m.screenSearch.inputs[0].View(),
+		m.screenSearch.inputs[1].View(),
+		lipgloss.NewStyle().Foreground(styles.HotPink).Width(30).Render(labels[2]),
+		m.screenSearch.inputs[2].View(),
+	) + "\n"
 
 	if m.screenSearch.loading {
 		s += fmt.Sprintf("%s Searcing flights...", m.screenSearch.spinner.View())
+	} else if m.screenSearch.err != "" {
+		s += fmt.Sprintf("\n Following error occured while fetching flights %s", m.screenSearch.err)
+		s += lipgloss.NewStyle().Foreground(styles.MutedGray).Width(30).Render("Search (enter)")
 	} else {
-		s += "(tab to switch fields, enter next/submit, esc to quit)\n"
-	}
-
-	if m.screenSearch.err != "" {
-		s += fmt.Sprintf("Following error occured while fetching flights %s", m.screenSearch.err)
+		s += lipgloss.NewStyle().Foreground(styles.MutedGray).Width(30).Render("Search (enter)")
 	}
 	return s
 }
