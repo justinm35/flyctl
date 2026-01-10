@@ -1,9 +1,9 @@
 package rapidgoogleflights
 
 type SearchFlightResp struct {
-	Status    bool   `json:"status"`
-	Message   string `json:"message"`
-	Timestamp int64  `json:"timestamp"`
+	Status    bool                `json:"status"`
+	Message   []map[string]string `json:"message"`
+	Timestamp int64               `json:"timestamp"`
 	Data      struct {
 		Itineraries struct {
 			TopFlights   []FlightOption `json:"topFlights"`

@@ -12,7 +12,7 @@ type screen int
 const (
 	screenSearch screen = iota
 	screenResults
-	screenDetails
+	screenFlightDetails
 )
 
 func main() {
@@ -27,21 +27,24 @@ func main() {
 
 // Model: App State
 type Model struct {
-	screen        screen
-	screenSearch  SearchState
-	screenResults ResultsState
+	screen              screen
+	screenSearch        SearchState
+	screenResults       ResultsState
+	screenFlightDetails FlightDetailsState
 }
 
 type searchResultsMsg struct{ offers []domain.FlightOffer }
+type flightDetailsSelectedMsg struct{ offer domain.FlightOffer }
 
-// type errMsg struct{ err error }
+type errMsg struct{ err error }
 
 // NewModel: Initial model
 func NewModel() Model {
 	return Model{
-		screen:        screenSearch,
-		screenSearch:  newSearchState(),
-		screenResults: newResultsState(),
+		screen:              screenSearch,
+		screenSearch:        newSearchState(),
+		screenResults:       newResultsState(),
+		screenFlightDetails: newFlightDetailsState(),
 	}
 }
 
@@ -53,6 +56,9 @@ func (m Model) Init() tea.Cmd {
 // Update: handle Msgs
 func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	if km, ok := msg.(tea.KeyMsg); ok {
+		if km.String() == "ctrl+z" {
+			return m, tea.Suspend
+		}
 		if km.String() == "ctrl+c" || km.String() == "esc" {
 			return m, tea.Quit
 		}
@@ -65,6 +71,9 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.screenResults.buildTable()
 		m.screen = screenResults
 		return m, nil
+	case flightDetailsSelectedMsg:
+		m.screenFlightDetails.initFlightDetails(msg.offer)
+		m.screen = screenFlightDetails
 	}
 
 	switch m.screen {
@@ -72,6 +81,8 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		return updateSearch(m, msg)
 	case screenResults:
 		return updateResults(m, msg)
+	case screenFlightDetails:
+		return updateFlightDetails(m, msg)
 	default:
 		return m, nil
 	}
@@ -84,6 +95,8 @@ func (m Model) View() string {
 		return viewSeach(m)
 	case screenResults:
 		return viewResults(m)
+	case screenFlightDetails:
+		return viewFlightDetails(m)
 	default:
 		return ""
 	}

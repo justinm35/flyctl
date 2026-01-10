@@ -58,10 +58,17 @@ func newResultsState() ResultsState {
 	return ResultsState{table: t}
 }
 
-// func (s ResultsState) initCmd() tea.Cmd { return textinput.Blink }
-
 func updateResults(m Model, msg tea.Msg) (tea.Model, tea.Cmd) {
 	var cmd tea.Cmd
+
+	switch msg := msg.(type) {
+	case tea.KeyMsg:
+		switch msg.String() {
+		// Select and open the details
+		case "enter":
+			return m, getFlightDetailsCmd(m)
+		}
+	}
 
 	m.screenResults.table, cmd = m.screenResults.table.Update(msg)
 
@@ -70,4 +77,15 @@ func updateResults(m Model, msg tea.Msg) (tea.Model, tea.Cmd) {
 
 func viewResults(m Model) string {
 	return "Results\n\n" + m.screenResults.table.View() + "\n\n(esc to quit)\n"
+}
+
+func getFlightDetailsCmd(model Model) tea.Cmd {
+	return func() tea.Msg {
+		idx := model.screenResults.table.Cursor()
+		if idx < 0 || idx >= len(model.screenResults.offers) {
+			return nil
+		}
+		offer := model.screenResults.offers[idx]
+		return flightDetailsSelectedMsg{offer: offer}
+	}
 }

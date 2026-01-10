@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/charmbracelet/bubbles/spinner"
 	"github.com/charmbracelet/bubbles/textinput"
@@ -54,6 +53,10 @@ func (s SearchState) initCmd() tea.Cmd { return textinput.Blink }
 
 func updateSearch(m Model, msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
+	case errMsg:
+		m.screenSearch.loading = false
+		m.screenSearch.err = msg.err.Error()
+		return m, nil
 	case spinner.TickMsg:
 		if m.screenSearch.loading {
 			var cmd tea.Cmd
@@ -115,6 +118,10 @@ func viewSeach(m Model) string {
 	} else {
 		s += "(tab to switch fields, enter next/submit, esc to quit)\n"
 	}
+
+	if m.screenSearch.err != "" {
+		s += fmt.Sprintf("Following error occured while fetching flights %s", m.screenSearch.err)
+	}
 	return s
 }
 
@@ -128,8 +135,7 @@ func getSearchResultsCmd(model Model) tea.Cmd {
 		}
 		offers, err := rapidgoogleflights.SearchFlights(input)
 		if err != nil {
-			log.Printf("SearchFlights error: %v", err)
-			log.Fatal(err)
+			return errMsg{err}
 		}
 
 		return searchResultsMsg{offers: offers}

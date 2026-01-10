@@ -63,7 +63,7 @@ func SearchFlights(input GetSearchResultsInput) ([]domain.FlightOffer, error) {
 
 	if err != nil {
 		log.Printf("SearchFlights Error: %s \n", string(err.Error()))
-		log.Fatal(err)
+		return nil, fmt.Errorf("request failed: %w", err)
 	}
 
 	var result SearchFlightResp
@@ -72,6 +72,10 @@ func SearchFlights(input GetSearchResultsInput) ([]domain.FlightOffer, error) {
 	dec.Decode(&result)
 	b, _ := json.MarshalIndent(result, "", "  ")
 	log.Printf("SearchFlights Responses: %s \n", string(b))
+
+	if !result.Status {
+		return nil, fmt.Errorf("rapidapi google flights error: %s", flattenMessages(result.Message))
+	}
 
 	adaptedRespone, _ := adaptSearchFlightResponse(result)
 
@@ -127,4 +131,24 @@ func adaptSearchFlightResponse(data SearchFlightResp) ([]domain.FlightOffer, err
 	}
 
 	return offers, nil
+}
+
+func flattenMessages(msg []map[string]string) string {
+	if len(msg) == 0 {
+		return "unknown error"
+	}
+	var parts []string
+	for _, m := range msg {
+		for k, v := range m {
+			if k != "" && v != "" {
+				parts = append(parts, fmt.Sprintf("%s: %s", k, v))
+			} else if v != "" {
+				parts = append(parts, v)
+			}
+		}
+	}
+	if len(parts) == 0 {
+		return "unknown error"
+	}
+	return strings.Join(parts, "; ")
 }
