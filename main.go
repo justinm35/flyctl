@@ -5,8 +5,8 @@ import (
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/justinm35/flyctl/domain"
 	"github.com/justinm35/flyctl/styles"
+	"github.com/justinm35/flyctl/types"
 )
 
 type screen int
@@ -45,8 +45,8 @@ type Model struct {
 	height              int
 }
 
-type searchResultsMsg struct{ offers []domain.FlightOffer }
-type flightDetailsSelectedMsg struct{ offer domain.FlightOffer }
+type searchResultsMsg struct{ offers []types.FlightOffer }
+type flightDetailsSelectedMsg struct{ offer types.FlightOffer }
 
 type errMsg struct{ err error }
 

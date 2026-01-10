@@ -14,13 +14,13 @@ import (
 	"strings"
 	"time"
 
-	"github.com/justinm35/flyctl/domain"
+	"github.com/justinm35/flyctl/types"
 	"github.com/spf13/viper"
 )
 
 const providerName = "amadeus"
 
-func SearchFlights(ctx context.Context, searchQuery domain.SearchRequest) ([]domain.FlightOffer, error) {
+func SearchFlights(ctx context.Context, searchQuery types.SearchRequest) ([]types.FlightOffer, error) {
 	client := &http.Client{}
 
 	u, _ := url.Parse("https://test.api.amadeus.com/v2/shopping/flight-offers")
@@ -56,8 +56,8 @@ func SearchFlights(ctx context.Context, searchQuery domain.SearchRequest) ([]dom
 	return adaptedRespone, nil
 }
 
-func adaptSearchFlightResponse(data SearchFlightResp) ([]domain.FlightOffer, error) {
-	offers := make([]domain.FlightOffer, 0, len(data.Data))
+func adaptSearchFlightResponse(data SearchFlightResp) ([]types.FlightOffer, error) {
+	offers := make([]types.FlightOffer, 0, len(data.Data))
 
 	for _, d := range data.Data {
 		money, err := parseMoneyMinorUnits(d.Price.Total, d.Price.Currency, 2) // assumes 2dp
@@ -65,7 +65,7 @@ func adaptSearchFlightResponse(data SearchFlightResp) ([]domain.FlightOffer, err
 			return nil, fmt.Errorf("parse price for offer %s: %w", d.ID, err)
 		}
 
-		var segs []domain.Segment
+		var segs []types.Segment
 		for _, itin := range d.Itineraries {
 			for _, s := range itin.Segments {
 				departAt, err := parseTimeFlexible(s.Departure.At)
@@ -90,7 +90,7 @@ func adaptSearchFlightResponse(data SearchFlightResp) ([]domain.FlightOffer, err
 					flightNo = carrier + flightNo
 				}
 
-				segs = append(segs, domain.Segment{
+				segs = append(segs, types.Segment{
 					From:     s.Departure.IataCode,
 					To:       s.Arrival.IataCode,
 					DepartAt: departAt,
@@ -102,10 +102,10 @@ func adaptSearchFlightResponse(data SearchFlightResp) ([]domain.FlightOffer, err
 			}
 		}
 
-		offers = append(offers, domain.FlightOffer{
+		offers = append(offers, types.FlightOffer{
 			Provider: providerName,
 			OfferID:  d.ID,
-			TotalPrice: domain.Money{
+			TotalPrice: types.Money{
 				Amount:   money.Amount,
 				Currency: money.Currency,
 			},
@@ -174,15 +174,15 @@ func parseTimeFlexible(s string) (time.Time, error) {
 
 // parseMoneyMinorUnits converts a decimal string (e.g. "123.45") into minor units (e.g. 12345).
 // decimals=2 is typical, but some currencies differ (JPY=0, etc.).
-func parseMoneyMinorUnits(amountStr, currency string, decimals int) (domain.Money, error) {
+func parseMoneyMinorUnits(amountStr, currency string, decimals int) (types.Money, error) {
 	amountStr = strings.TrimSpace(amountStr)
 	if amountStr == "" {
-		return domain.Money{}, fmt.Errorf("empty amount")
+		return types.Money{}, fmt.Errorf("empty amount")
 	}
 
 	r := new(big.Rat)
 	if _, ok := r.SetString(amountStr); !ok {
-		return domain.Money{}, fmt.Errorf("invalid decimal %q", amountStr)
+		return types.Money{}, fmt.Errorf("invalid decimal %q", amountStr)
 	}
 
 	scale := new(big.Rat).SetInt(big.NewInt(int64Pow10(decimals)))
@@ -192,7 +192,7 @@ func parseMoneyMinorUnits(amountStr, currency string, decimals int) (domain.Mone
 	f, _ := r.Float64()
 	rounded := int64(math.Round(f))
 
-	return domain.Money{
+	return types.Money{
 		Amount:   rounded,
 		Currency: strings.TrimSpace(currency),
 	}, nil

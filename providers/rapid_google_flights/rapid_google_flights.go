@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/justinm35/flyctl/domain"
+	"github.com/justinm35/flyctl/types"
 	"github.com/spf13/viper"
 )
 
@@ -24,7 +24,7 @@ type GetSearchResultsInput struct {
 	Currency        string
 }
 
-func SearchFlights(input GetSearchResultsInput) ([]domain.FlightOffer, error) {
+func SearchFlights(input GetSearchResultsInput) ([]types.FlightOffer, error) {
 	client := &http.Client{}
 
 	u, _ := url.Parse("https://google-flights2.p.rapidapi.com/api/v1/searchFlights")
@@ -82,15 +82,15 @@ func SearchFlights(input GetSearchResultsInput) ([]domain.FlightOffer, error) {
 	return adaptedRespone, nil
 }
 
-func adaptSearchFlightResponse(data SearchFlightResp) ([]domain.FlightOffer, error) {
+func adaptSearchFlightResponse(data SearchFlightResp) ([]types.FlightOffer, error) {
 	all := make([]FlightOption, 0, len(data.Data.Itineraries.TopFlights)+len(data.Data.Itineraries.OtherFlights))
 	all = append(all, data.Data.Itineraries.TopFlights...)
 	all = append(all, data.Data.Itineraries.OtherFlights...)
 
-	offers := make([]domain.FlightOffer, 0, len(all))
+	offers := make([]types.FlightOffer, 0, len(all))
 
 	for i, opt := range all {
-		segs := make([]domain.Segment, 0, len(opt.Flights))
+		segs := make([]types.Segment, 0, len(opt.Flights))
 
 		for _, leg := range opt.Flights {
 			departAt, err := time.Parse("2006-1-2 15:04", strings.TrimSpace(leg.DepartureAirport.Time))
@@ -103,7 +103,7 @@ func adaptSearchFlightResponse(data SearchFlightResp) ([]domain.FlightOffer, err
 				return nil, fmt.Errorf("parse arrival time %q: %w", leg.ArrivalAirport.Time, err)
 			}
 
-			segs = append(segs, domain.Segment{
+			segs = append(segs, types.Segment{
 				From:     strings.TrimSpace(leg.DepartureAirport.AirportCode),
 				To:       strings.TrimSpace(leg.ArrivalAirport.AirportCode),
 				DepartAt: departAt,
@@ -119,10 +119,10 @@ func adaptSearchFlightResponse(data SearchFlightResp) ([]domain.FlightOffer, err
 			offerID = fmt.Sprintf("offer-%d-%d", data.Timestamp, i)
 		}
 
-		offers = append(offers, domain.FlightOffer{
+		offers = append(offers, types.FlightOffer{
 			Provider: providerName,
 			OfferID:  offerID,
-			TotalPrice: domain.Money{
+			TotalPrice: types.Money{
 				Amount:   int64(opt.Price) * 100, // simple: major -> minor
 				Currency: "USD",                  // payload doesn’t include currency; set default or plumb it in
 			},

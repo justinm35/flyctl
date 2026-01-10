@@ -9,17 +9,17 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/glamour"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/justinm35/flyctl/domain"
 	"github.com/justinm35/flyctl/styles"
+	"github.com/justinm35/flyctl/types"
 )
 
 type FlightDetailsState struct {
-	offer    domain.FlightOffer
+	offer    types.FlightOffer
 	viewport viewport.Model
 	err      string
 }
 
-func (flightDetailsState *FlightDetailsState) initFlightDetails(selectedOffer domain.FlightOffer) {
+func (flightDetailsState *FlightDetailsState) initFlightDetails(selectedOffer types.FlightOffer) {
 	vp := viewport.New(50, 50)
 
 	flightDetailsState.viewport = vp
@@ -74,7 +74,7 @@ func viewFlightDetails(m Model) string {
 	return vp.View()
 }
 
-func lipGlossRender(offer domain.FlightOffer, width int) string {
+func lipGlossRender(offer types.FlightOffer, width int) string {
 
 	const dateLayout = "Mon, 02 Jan 2006"
 	const timeLayout = "15:04 MST"
@@ -140,7 +140,7 @@ func lipGlossRender(offer domain.FlightOffer, width int) string {
 	return lipgloss.NewStyle().Render(fillView)
 }
 
-func offerMarkdown(offer domain.FlightOffer) string {
+func offerMarkdown(offer types.FlightOffer) string {
 	var b strings.Builder
 
 	const dateLayout = "Mon, 02 Jan 2006"
@@ -189,7 +189,7 @@ func offerMarkdown(offer domain.FlightOffer) string {
 	return b.String()
 }
 
-func routeLine(segs []domain.Segment) string {
+func routeLine(segs []types.Segment) string {
 	if len(segs) == 0 {
 		return "-"
 	}

@@ -4,14 +4,14 @@ import (
 	"github.com/charmbracelet/bubbles/table"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/justinm35/flyctl/domain"
 	"github.com/justinm35/flyctl/styles"
+	"github.com/justinm35/flyctl/types"
 	"github.com/justinm35/flyctl/utils"
 )
 
 type ResultsState struct {
 	table  table.Model
-	offers []domain.FlightOffer
+	offers []types.FlightOffer
 	err    string
 }
 

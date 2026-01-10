@@ -6,10 +6,10 @@ import (
 	"time"
 
 	"github.com/charmbracelet/bubbles/table"
-	"github.com/justinm35/flyctl/domain"
+	"github.com/justinm35/flyctl/types"
 )
 
-func FormatResponseData(offers []domain.FlightOffer) []table.Row {
+func FormatResponseData(offers []types.FlightOffer) []table.Row {
 	var allRows []table.Row
 
 	for _, o := range offers {
@@ -68,8 +68,8 @@ func FormatResponseData(offers []domain.FlightOffer) []table.Row {
 		// -------- Carrier (choose unique carriers encountered)
 		carrierString := joinUniqueCarriers(o.Segments)
 
-		// -------- Seats remaining (not in domain yet)
-		// seatsRemaining := "-" // you removed it from domain.FlightOffer
+		// -------- Seats remaining (not in types yet)
+		// seatsRemaining := "-" // you removed it from types.FlightOffer
 
 		allRows = append(allRows, table.Row{
 			routeString,
@@ -97,7 +97,7 @@ func formatDuration(d time.Duration) string {
 	return fmt.Sprintf("%dh %dm", h, m)
 }
 
-func formatMoney(m domain.Money) string {
+func formatMoney(m types.Money) string {
 	// assumes 2dp; matches your adapter parseMoneyMinorUnits(..., 2)
 	abs := m.Amount
 	sign := ""
@@ -110,7 +110,7 @@ func formatMoney(m domain.Money) string {
 	return fmt.Sprintf("%s%s %d.%02d", sign, m.Currency, major, minor)
 }
 
-func joinUniqueCarriers(segs []domain.Segment) string {
+func joinUniqueCarriers(segs []types.Segment) string {
 	seen := map[string]struct{}{}
 	var carriers []string
 	for _, s := range segs {
