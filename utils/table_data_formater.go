@@ -72,6 +72,7 @@ func FormatResponseData(offers []types.FlightOffer) []table.Row {
 		// seatsRemaining := "-" // you removed it from types.FlightOffer
 
 		allRows = append(allRows, table.Row{
+			" ",
 			routeString,
 			departureTime,
 			arrivalTime,
@@ -84,6 +85,7 @@ func FormatResponseData(offers []types.FlightOffer) []table.Row {
 
 	return allRows
 }
+
 func formatDuration(d time.Duration) string {
 	// "2h15m" -> "2h 15m"
 	h := int(d.Hours())

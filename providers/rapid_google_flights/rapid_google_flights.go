@@ -70,8 +70,6 @@ func SearchFlights(input GetSearchResultsInput) ([]types.FlightOffer, error) {
 
 	dec := json.NewDecoder(resp.Body)
 	dec.Decode(&result)
-	b, _ := json.MarshalIndent(result, "", "  ")
-	log.Printf("SearchFlights Responses: %s \n", string(b))
 
 	if !result.Status {
 		return nil, fmt.Errorf("rapidapi google flights error: %s", flattenMessages(result.Message))

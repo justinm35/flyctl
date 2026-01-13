@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 
+	"github.com/charmbracelet/bubbles/table"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/justinm35/flyctl/styles"
@@ -26,7 +27,6 @@ var allScreens = []screen{
 
 func main() {
 	InitConfig()
-
 	m := NewModel()
 	_, err := tea.NewProgram(m, tea.WithAltScreen()).Run()
 	if err != nil {
@@ -47,6 +47,7 @@ type Model struct {
 
 type searchResultsMsg struct{ offers []types.FlightOffer }
 type flightDetailsSelectedMsg struct{ offer types.FlightOffer }
+type newStarredRowMsg struct{ formattedRows []table.Row }
 
 type errMsg struct{ err error }
 
@@ -89,7 +90,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		if km.String() == "ctrl+z" {
 			return m, tea.Suspend
 		}
-		if km.String() == "ctrl+c" || km.String() == "esc" {
+		if km.String() == "ctrl+c" {
 			return m, tea.Quit
 		}
 	}
@@ -98,10 +99,13 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case tea.WindowSizeMsg:
 		m.width = msg.Width
 		m.height = msg.Height
+		m.screenResults.setTableWidth(m.width)
 	case searchResultsMsg:
 		m.screenSearch.loading = false
 		m.focusedPane = 1
 		m.screenResults.offers = msg.offers
+		// Store the data here
+		StoreData("allOffers", msg.offers)
 		m.screenResults.buildTable(m.width)
 		m.screen = screenResults
 		return m, nil
@@ -126,7 +130,10 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (m Model) View() string {
 	totalHeight := m.height - 2
 	totalWidth := m.width - 4
-	halfWidth := totalWidth / 2
+
+	thirdWidth := m.width / 3
+
+	// halfWidth := totalWidth / 2
 	halfHeight := m.height / 2
 
 	paneStyle := lipgloss.NewStyle().
@@ -138,13 +145,13 @@ func (m Model) View() string {
 	if allScreens[m.focusedPane] == screenResults {
 		topPane = paneStyle.
 			Height(halfHeight - 30).
-			Width(totalWidth).
+			Width(totalWidth + 2).
 			BorderForeground(styles.NeonPurple).
 			Render(viewResults(m))
 	} else {
 		topPane = paneStyle.
 			Height(halfHeight - 30).
-			Width(totalWidth).
+			Width(totalWidth + 2).
 			Render(viewResults(m))
 	}
 
@@ -153,13 +160,13 @@ func (m Model) View() string {
 	if allScreens[m.focusedPane] == screenSearch {
 		bottomLeftPane = paneStyle.
 			Height(totalHeight - halfHeight).
-			Width(halfWidth).
+			Width(thirdWidth).
 			BorderForeground(styles.NeonPurple).
 			Render(viewSeach(m))
 	} else {
 		bottomLeftPane = paneStyle.
 			Height(totalHeight - halfHeight).
-			Width(halfWidth).
+			Width(thirdWidth).
 			Render(viewSeach(m))
 	}
 
@@ -168,20 +175,20 @@ func (m Model) View() string {
 	if allScreens[m.focusedPane] == screenFlightDetails {
 		bottomRightPane = paneStyle.
 			Height(totalHeight - halfHeight).
-			Width(halfWidth).
+			Width(totalWidth - thirdWidth).
 			BorderForeground(styles.NeonPurple).
 			Render(viewFlightDetails(m))
 	} else {
 		bottomRightPane = paneStyle.
 			Height(totalHeight - halfHeight).
-			Width(halfWidth).
+			Width(totalWidth - thirdWidth).
 			Render(viewFlightDetails(m))
 	}
 
 	bottomBar := lipgloss.NewStyle().
 		Foreground(styles.MutedGray).
 		Width(totalWidth).
-		Render("(esc to quit)")
+		Render("quit: ctrl + c | cycle panes: tab")
 
 	bottomHalf := lipgloss.JoinHorizontal(lipgloss.Bottom, bottomLeftPane, bottomRightPane)
 	fullView := lipgloss.JoinVertical(lipgloss.Top, topPane, bottomHalf, bottomBar)
