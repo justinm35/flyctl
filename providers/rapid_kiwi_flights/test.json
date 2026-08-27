@@ -1,0 +1,521 @@
+Turn this into a go type schema {
+  "__typename": "Itineraries",
+  "metadata": {
+    "topFiveResultsBaggageEligibility": {
+      "promptUserToSearchWithBags": null,
+      "searchIsLongTrip": null,
+      "searchIsFamilyTrip": null,
+      "numberOfBags": null
+    },
+    "carriers": [
+      {
+        "id": "Carrier:325",
+        "code": "A9",
+        "name": "Georgian Airways"
+      },
+      {
+        "id": "Carrier:1010",
+        "code": "ZT",
+        "name": "Titan Airways"
+      },
+    ],
+    "stopoverCountries": [],
+    "inboundDays": [],
+    "outboundDays": [
+      "FRIDAY",
+      "SATURDAY",
+      "SUNDAY",
+      "WEDNESDAY",
+      "TUESDAY",
+      "MONDAY"
+    ],
+    "travelTips": [],
+    "topResults": {
+      "best": {
+        "__typename": "ItineraryOneWay",
+        "duration": 10200,
+        "price": {
+          "amount": "60.307115"
+        },
+        "id": "ItineraryOneWay:eyJwcm92aWRlcnMiOiJLSVdJIiwicm91dGVfZGF0YSI6IkZSOjU5Njc6U1ROOjE3NjkxNTE5MDA6REJWOjE3NjkxNjIxMDA6ZWNvbm9teTpGYWxzZTo6OiIsInByaWNlIjoiNjAuMzA3MTE1In0="
+      },
+      "cheapest": {
+        "__typename": "ItineraryOneWay",
+        "duration": 10200,
+        "price": {
+          "amount": "60.307115"
+        },
+        "id": "ItineraryOneWay:eyJwcm92aWRlcnMiOiJLSVdJIiwicm91dGVfZGF0YSI6IkZSOjU5Njc6U1ROOjE3NjkxNTE5MDA6REJWOjE3NjkxNjIxMDA6ZWNvbm9teTpGYWxzZTo6OiIsInByaWNlIjoiNjAuMzA3MTE1In0="
+      },
+      "fastest": {
+        "__typename": "ItineraryOneWay",
+        "duration": 9300,
+        "price": {
+          "amount": "75.041027"
+        },
+        "id": "ItineraryOneWay:eyJwcm92aWRlcnMiOiJLSVdJIiwicm91dGVfZGF0YSI6IkZSOjU5Njc6U1ROOjE3NzY2MTI2MDA6REJWOjE3NzY2MjE5MDA6ZWNvbm9teTpGYWxzZTo6OiIsInByaWNlIjoiNzUuMDQxMDI3In0="
+      },
+      "sourceTakeoffAsc": {
+        "__typename": "ItineraryOneWay",
+        "duration": 10200,
+        "price": {
+          "amount": "62.323424"
+        },
+        "id": "ItineraryOneWay:eyJwcm92aWRlcnMiOiJLSVdJIiwicm91dGVfZGF0YSI6IkZSOjU5Njc6U1ROOjE3Njg1NDcxMDA6REJWOjE3Njg1NTczMDA6ZWNvbm9teTpGYWxzZTo6OiIsInByaWNlIjoiNjIuMzIzNDI0In0="
+      },
+      "destinationLandingAsc": {
+        "__typename": "ItineraryOneWay",
+        "duration": 10200,
+        "price": {
+          "amount": "62.323424"
+        },
+        "id": "ItineraryOneWay:eyJwcm92aWRlcnMiOiJLSVdJIiwicm91dGVfZGF0YSI6IkZSOjU5Njc6U1ROOjE3Njg1NDcxMDA6REJWOjE3Njg1NTczMDA6ZWNvbm9teTpGYWxzZTo6OiIsInByaWNlIjoiNjIuMzIzNDI0In0="
+      }
+    },
+    "priceAlertExists": null,
+    "existingPriceAlert": null,
+    "searchFingerprint": "eyJwYXJhbXMiOnsiZmlsdGVyIjp7ImFsbG93Q2hhbmdlSW5ib3VuZERlc3RpbmF0aW9uIjp0cnVlLCJhbGxvd0NoYW5nZUluYm91bmRTb3VyY2UiOnRydWUsImFsbG93T3Zlcm5pZ2h0U3RvcG92ZXIiOnRydWUsImFsbG93RGlmZmVyZW50U3RhdGlvbkNvbm5lY3Rpb24iOnRydWUsImNvbnRlbnRQcm92aWRlcnMiOlsiRkxJWEJVU19ESVJFQ1RTIiwiRlJFU0giLCJLQVlBSyIsIktJV0kiXSwiZmxpZ2h0c0FwaUxpbWl0IjoyNSwibGltaXQiOjIwLCJvdXRib3VuZCI6eyJkYXlzIjpbIlNVTkRBWSIsIldFRE5FU0RBWSIsIlRIVVJTREFZIiwiRlJJREFZIiwiU0FUVVJEQVkiLCJNT05EQVkiLCJUVUVTREFZIl19LCJzaG93Tm9DaGVja2VkQmFncyI6dHJ1ZSwidHJhbnNwb3J0VHlwZXMiOlsiRkxJR0hUIl0sImVuYWJsZUZyb21Ub0xvY2F0aW9uSW5WaWEiOmZhbHNlLCJlbmFibGVTZWxmVHJhbnNmZXIiOnRydWUsImVuYWJsZVRydWVIaWRkZW5DaXR5Ijp0cnVlLCJlbmFibGVUaHJvd0F3YXlUaWNrZXRpbmciOnRydWUsImV4Y2x1ZGVUSENJblNlYXJjaFJlc3VsdHMiOmZhbHNlLCJhbGxvd1JldHVyblRvRGlmZmVyZW50Q2l0eSI6ZmFsc2UsImFsbG93UmV0dXJuRnJvbURpZmZlcmVudENpdHkiOmZhbHNlLCJlbnN1cmVLaXdpQm9va2luZ09wdGlvbiI6ZmFsc2V9LCJvcHRpb25zIjp7ImN1cnJlbmN5IjoidXNkIiwicGFydG5lciI6InNreXBpY2tlciIsImFmZmlsSUQiOiJza3lwaWNrZXIiLCJsb2NhbGUiOiJlbiIsImV4YWN0VHJhdmVsVGlwcyI6ZmFsc2UsImFiVGVzdElucHV0Ijp7InBvcHVsYXJpdHlUaWxlc1JlZHVjdGlvbiI6dHJ1ZX0sInVzZVByZWNhY2hlZCI6ZmFsc2UsInNvcnRCeSI6IlFVQUxJVFkiLCJtZXJnZVByaWNlRGlmZlJ1bGUiOiJJTkNSRUFTRUQiLCJmYXN0RmlsdGVycyI6ZmFsc2UsImZlYXR1cmVOYW1lIjoiU2VhcmNoT25lV2F5SXRpbmVyYXJpZXNRdWVyeSIsImlzUHJlZmV0Y2giOmZhbHNlLCJwYXBheWFJdGluZXJhcmllc1ByZXNlbnRhdGlvbiI6IkRFRkFVTFQifSwic2VhcmNoIjp7InBhc3NlbmdlcnMiOnsiYWR1bHRzSG9sZEJhZ3MiOlswXSwiYWR1bHRzSGFuZEJhZ3MiOlsxXSwiYWR1bHRzIjoxLCJjaGlsZHJlbiI6MCwiaW5mYW50cyI6MH0sImNhYmluQ2xhc3MiOnsiY2FiaW5DbGFzcyI6IkVDT05PTVkiLCJhcHBseU1peGVkQ2xhc3NlcyI6dHJ1ZX0sIml0aW5lcmFyeSI6eyJzb3VyY2UiOnsiaWRzIjpbIkdCIl19LCJkZXN0aW5hdGlvbiI6eyJpZHMiOlsiZHVicm92bmlrX2hyIl19fX19LCJzZWFyY2hfdHlwZSI6Ik9ORVdBWV9JVElORVJBUklFUyIsInNlYXJjaF9pZCI6IjY4MTA3YjMxYWVhNSIsImNyZWF0ZWRfYXQiOjE3NjgzMzQ0NDcsInZlcnNpb24iOjF9",
+    "hasMorePending": false,
+    "priceAlertsTopResults": {
+      "best": {
+        "price": {
+          "amount": "60.307115"
+        }
+      },
+      "cheapest": {
+        "price": {
+          "amount": "60.307115"
+        }
+      },
+      "fastest": {
+        "price": {
+          "amount": "75.041027"
+        }
+      },
+      "sourceTakeoffAsc": {
+        "price": {
+          "amount": "62.323424"
+        }
+      },
+      "destinationLandingAsc": {
+        "price": {
+          "amount": "62.323424"
+        }
+      }
+    },
+    "itinerariesCount": 25,
+    "missingProviders": [],
+    "statusPerProvider": [
+      {
+        "provider": {
+          "id": "ContentProvider:KIWI"
+        },
+        "errorHappened": false,
+        "errorMessage": ""
+      }
+    ],
+    "topFiveOriginalItinerariesContainTHC": false,
+    "hasTier1MarketItineraries": false,
+    "contextuallyRecommendedFilters": [
+      {
+        "__typename": "AirportChangesInfo",
+        "count": 0,
+        "ranks": []
+      },
+      {
+        "__typename": "DirectFlightsInfo",
+        "count": 10,
+        "ranks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ]
+      },
+      {
+        "__typename": "MultipleStopsInfo",
+        "count": 0,
+        "ranks": []
+      },
+      {
+        "__typename": "SelfTransferInfo",
+        "count": 0,
+        "ranks": []
+      },
+      {
+        "__typename": "HiddenCityInfo",
+        "count": 0,
+        "ranks": []
+      },
+      {
+        "__typename": "WeekendTripInfo",
+        "isWeekendTrip": false
+      }
+    ],
+    "sharedItinerary": null
+  },
+  "itineraries": [
+    {
+      "__typename": "ItineraryOneWay",
+      "__isItinerary": "ItineraryOneWay",
+      "id": "ItineraryOneWay:eyJwcm92aWRlcnMiOiJLSVdJIiwicm91dGVfZGF0YSI6IkZSOjU5Njc6U1ROOjE3NzUwNzMwMDA6REJWOjE3NzUwODIzMDA6ZWNvbm9teTpGYWxzZTo6OlJSIiwicHJpY2UiOiI3Ny4wNTczMzYifQ==",
+      "shareId": "eyJyIjoiRlI6NTk2NzpTVE46MTc3NTA3MzAwMDpEQlY6MTc3NTA4MjMwMDplY29ub215OkZhbHNlOjo6UlIiLCJpIjpbIjAzMmQxZGRjNTA0MDAwMDAzYTZmYmYzOV8wIl0sInRoYyI6MCwidGF0IjowLCJ2aSI6MCwidCI6Ik9XIn0=",
+      "price": {
+        "amount": "77.057336",
+        "priceBeforeDiscount": "77.057336"
+      },
+      "priceEur": {
+        "amount": "66.131511"
+      },
+      "provider": {
+        "name": "Kiwi.com",
+        "code": "KIWI",
+        "hasHighProbabilityOfPriceChange": false,
+        "contentProvider": {
+          "code": "KIWI"
+        },
+        "id": "ItineraryProvider:KIWI"
+      },
+      "bagsInfo": {
+        "includedCheckedBags": 0,
+        "includedHandBags": 1,
+        "hasNoBaggageSupported": false,
+        "hasNoCheckedBaggage": false,
+        "checkedBagTiers": [
+          {
+            "tierPrice": {
+              "amount": "40.78"
+            },
+            "bags": [
+              {
+                "weight": {
+                  "value": 20
+                }
+              }
+            ]
+          },
+          {
+            "tierPrice": {
+              "amount": "81.56"
+            },
+            "bags": [
+              {
+                "weight": {
+                  "value": 20
+                }
+              }
+            ]
+          }
+        ],
+        "handBagTiers": [
+          {
+            "tierPrice": {
+              "amount": "29.57"
+            },
+            "bags": [
+              {
+                "weight": {
+                  "value": 10
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "bookingOptions": {
+        "edges": [
+          {
+            "node": {
+              "token": "HjX7S76tZgiT34ImlF8eZqYAbBtatYdSpUjdwra5O34aQwQz8uk4ZENN7xK27U9a0j56q8VN-f7IKQ_Ntb0AynnTANZ3cXyXpuqP5KhLVug_3AiDXwodk7kKPwS4mbFsRJCNgBhBZGtz8JOH0SWjdH1kX0bepaN2L8tXVbkbBQl13W0gZh82luzHJo664C6hEXQMjwdfX8NQvibh0DoVyLVaW0vCq-ngdASxu6DInDugHeEjXmkMDn9-CsTemLeJYih6YVL2xv2c34P_PyN6_HB4R1xLqowRw4YonPiHV9vDyo7JWtWF4vvWl3A6ceos2UXPAS88jUlgCCpwhyRZ83Zc57kpSlD1bI8QW2PLFEPgfVVgfo_ggmlm3Ml53TCR2rafBKpgfW6AWLh6hkRAQRPrwDa5rOCNUjt_aTEEzJbwmTGM72YJyWSVxAHGkQpW3X2JCIalWiEjXNWcWymZT8HIr2yENo8nuWEy2Ec9yXYmFCq4LHX2fw1kqbIyjssptcc4LRvh1_ja5jNPNnLlOXGQ5V3WbvxpZdt9nHfycOKJksklmDayScQRgu02F-Bd-iVI8NDRagENe3Pp1XmET_RKL4wr-Uyikap-X7N_gu1PaFzI2W_f0BF5HyTacWJWWaMQ7chjAL7MlnjoeVeJM1UV3SRJgsqjG9tssvAxud_NkIK-9UY2DQ6bY9VVIcnb2h8h5b1fhlmCF7y3lmVum_ffXgT9PEBNB9hi4Mkwh8r3NnyNBKJj85t69ghROi5lZh0TxpJvR8FT7asUTKzxnfudA0xEkUuduyOhuPx6H4MKrzXG6Tp4qVe2HS3ExaEtzmomymicRAoZvjk22WneZX60M5g1zhtet9I6Dte4TPvQJukGgeD8X-oxXsLHQDFJHdVdNM0t8uVngYdXIB9YXxiOZQHzR48eyBRKHscuzE2XinbekfJYVwREAPUqRR7ot",
+              "bookingUrl": "/en/booking/?direct=true&locale=en&currency=usd&passengers=1-0-0&token=HjX7S76tZgiT34ImlF8eZqYAbBtatYdSpUjdwra5O34aQwQz8uk4ZENN7xK27U9a0j56q8VN-f7IKQ_Ntb0AynnTANZ3cXyXpuqP5KhLVug_3AiDXwodk7kKPwS4mbFsRJCNgBhBZGtz8JOH0SWjdH1kX0bepaN2L8tXVbkbBQl13W0gZh82luzHJo664C6hEXQMjwdfX8NQvibh0DoVyLVaW0vCq-ngdASxu6DInDugHeEjXmkMDn9-CsTemLeJYih6YVL2xv2c34P_PyN6_HB4R1xLqowRw4YonPiHV9vDyo7JWtWF4vvWl3A6ceos2UXPAS88jUlgCCpwhyRZ83Zc57kpSlD1bI8QW2PLFEPgfVVgfo_ggmlm3Ml53TCR2rafBKpgfW6AWLh6hkRAQRPrwDa5rOCNUjt_aTEEzJbwmTGM72YJyWSVxAHGkQpW3X2JCIalWiEjXNWcWymZT8HIr2yENo8nuWEy2Ec9yXYmFCq4LHX2fw1kqbIyjssptcc4LRvh1_ja5jNPNnLlOXGQ5V3WbvxpZdt9nHfycOKJksklmDayScQRgu02F-Bd-iVI8NDRagENe3Pp1XmET_RKL4wr-Uyikap-X7N_gu1PaFzI2W_f0BF5HyTacWJWWaMQ7chjAL7MlnjoeVeJM1UV3SRJgsqjG9tssvAxud_NkIK-9UY2DQ6bY9VVIcnb2h8h5b1fhlmCF7y3lmVum_ffXgT9PEBNB9hi4Mkwh8r3NnyNBKJj85t69ghROi5lZh0TxpJvR8FT7asUTKzxnfudA0xEkUuduyOhuPx6H4MKrzXG6Tp4qVe2HS3ExaEtzmomymicRAoZvjk22WneZX60M5g1zhtet9I6Dte4TPvQJukGgeD8X-oxXsLHQDFJHdVdNM0t8uVngYdXIB9YXxiOZQHzR48eyBRKHscuzE2XinbekfJYVwREAPUqRR7ot&searchType=oneWay&searchBags=1.0",
+              "trackingPixel": "https://www.kiwi.com/pixel?affilid=skypicker&currency=USD&flightsId=032d1ddc504000003a6fbf39_0&from=STN&lang=en&passengers=1&searchBags=1.0&to=DBV&booking_token=HjX7S76tZgiT34ImlF8eZqYAbBtatYdSpUjdwra5O34aQwQz8uk4ZENN7xK27U9a0j56q8VN-f7IKQ_Ntb0AynnTANZ3cXyXpuqP5KhLVug_3AiDXwodk7kKPwS4mbFsRJCNgBhBZGtz8JOH0SWjdH1kX0bepaN2L8tXVbkbBQl13W0gZh82luzHJo664C6hEXQMjwdfX8NQvibh0DoVyLVaW0vCq-ngdASxu6DInDugHeEjXmkMDn9-CsTemLeJYih6YVL2xv2c34P_PyN6_HB4R1xLqowRw4YonPiHV9vDyo7JWtWF4vvWl3A6ceos2UXPAS88jUlgCCpwhyRZ83Zc57kpSlD1bI8QW2PLFEPgfVVgfo_ggmlm3Ml53TCR2rafBKpgfW6AWLh6hkRAQRPrwDa5rOCNUjt_aTEEzJbwmTGM72YJyWSVxAHGkQpW3X2JCIalWiEjXNWcWymZT8HIr2yENo8nuWEy2Ec9yXYmFCq4LHX2fw1kqbIyjssptcc4LRvh1_ja5jNPNnLlOXGQ5V3WbvxpZdt9nHfycOKJksklmDayScQRgu02F-Bd-iVI8NDRagENe3Pp1XmET_RKL4wr-Uyikap-X7N_gu1PaFzI2W_f0BF5HyTacWJWWaMQ7chjAL7MlnjoeVeJM1UV3SRJgsqjG9tssvAxud_NkIK-9UY2DQ6bY9VVIcnb2h8h5b1fhlmCF7y3lmVum_ffXgT9PEBNB9hi4Mkwh8r3NnyNBKJj85t69ghROi5lZh0TxpJvR8FT7asUTKzxnfudA0xEkUuduyOhuPx6H4MKrzXG6Tp4qVe2HS3ExaEtzmomymicRAoZvjk22WneZX60M5g1zhtet9I6Dte4TPvQJukGgeD8X-oxXsLHQDFJHdVdNM0t8uVngYdXIB9YXxiOZQHzR48eyBRKHscuzE2XinbekfJYVwREAPUqRR7ot",
+              "itineraryProvider": {
+                "code": "KIWI",
+                "name": "Kiwi.com",
+                "subprovider": null,
+                "hasHighProbabilityOfPriceChange": false,
+                "contentProvider": {
+                  "code": "KIWI"
+                },
+                "id": "ItineraryProvider:KIWI"
+              },
+              "price": {
+                "amount": "77.057336"
+              }
+            }
+          }
+        ]
+      },
+      "travelHack": {
+        "isTrueHiddenCity": false,
+        "isVirtualInterlining": false,
+        "isThrowawayTicket": false
+      },
+      "legacyId": "032d1ddc504000003a6fbf39_0",
+      "sector": {
+        "id": "Sector:df5a0be0d6888285927c6535f2ba71d62b0a0d1d~df5a0be0d6888285927c6535f2ba71d62b0a0d1d",
+        "sectorSegments": [
+          {
+            "guarantee": null,
+            "segment": {
+              "id": "Segment:df5a0be0d6888285927c6535f2ba71d62b0a0d1d",
+              "source": {
+                "localTime": "2026-04-01T20:50:00",
+                "utcTime": "2026-04-01T19:50:00",
+                "station": {
+                  "id": "Station:airport:STN",
+                  "legacyId": "STN",
+                  "name": "London Stansted",
+                  "code": "STN",
+                  "type": "AIRPORT",
+                  "gps": {
+                    "lat": 51.885,
+                    "lng": 0.23500000000000001
+                  },
+                  "city": {
+                    "legacyId": "london_gb",
+                    "name": "London",
+                    "id": "City:london_gb"
+                  },
+                  "country": {
+                    "code": "GB",
+                    "id": "Country:GB"
+                  }
+                }
+              },
+              "destination": {
+                "localTime": "2026-04-02T00:25:00",
+                "utcTime": "2026-04-01T22:25:00",
+                "station": {
+                  "id": "Station:airport:DBV",
+                  "legacyId": "DBV",
+                  "name": "Dubrovnik",
+                  "code": "DBV",
+                  "type": "AIRPORT",
+                  "gps": {
+                    "lat": 42.5613889,
+                    "lng": 18.2683333
+                  },
+                  "city": {
+                    "legacyId": "dubrovnik_hr",
+                    "name": "Dubrovnik",
+                    "id": "City:dubrovnik_hr"
+                  },
+                  "country": {
+                    "code": "HR",
+                    "id": "Country:HR"
+                  }
+                }
+              },
+              "duration": 9300,
+              "type": "FLIGHT",
+              "code": "5967",
+              "carrier": {
+                "id": "Carrier:11",
+                "name": "Ryanair",
+                "code": "FR"
+              },
+              "operatingCarrier": {
+                "id": "Carrier:1687",
+                "name": "Buzz",
+                "code": "RR"
+              },
+              "cabinClass": "ECONOMY",
+              "hiddenDestination": null,
+              "throwawayDestination": null
+            },
+            "layover": null
+          }
+        ],
+        "duration": 9300
+      },
+      "lastAvailable": {
+        "seatsLeft": null
+      }
+    },
+    {
+      "__typename": "ItineraryOneWay",
+      "__isItinerary": "ItineraryOneWay",
+      "id": "ItineraryOneWay:eyJwcm92aWRlcnMiOiJLSVdJIiwicm91dGVfZGF0YSI6IkZSOjU5Njc6U1ROOjE3NzY3ODU0MDA6REJWOjE3NzY3OTQ3MDA6ZWNvbm9teTpGYWxzZTo6OlJSIiwicHJpY2UiOiI3Ny43Mjk0MzkifQ==",
+      "shareId": "eyJyIjoiRlI6NTk2NzpTVE46MTc3Njc4NTQwMDpEQlY6MTc3Njc5NDcwMDplY29ub215OkZhbHNlOjo6UlIiLCJpIjpbIjAzMmQxZGRjNTA1NDAwMDBkYmU3MGE2Zl8wIl0sInRoYyI6MCwidGF0IjowLCJ2aSI6MCwidCI6Ik9XIn0=",
+      "price": {
+        "amount": "77.729439",
+        "priceBeforeDiscount": "77.729439"
+      },
+      "priceEur": {
+        "amount": "66.708318"
+      },
+      "provider": {
+        "name": "Kiwi.com",
+        "code": "KIWI",
+        "hasHighProbabilityOfPriceChange": false,
+        "contentProvider": {
+          "code": "KIWI"
+        },
+        "id": "ItineraryProvider:KIWI"
+      },
+      "bagsInfo": {
+        "includedCheckedBags": 0,
+        "includedHandBags": 1,
+        "hasNoBaggageSupported": false,
+        "hasNoCheckedBaggage": false,
+        "checkedBagTiers": [
+          {
+            "tierPrice": {
+              "amount": "46.36"
+            },
+            "bags": [
+              {
+                "weight": {
+                  "value": 20
+                }
+              }
+            ]
+          },
+          {
+            "tierPrice": {
+              "amount": "92.72"
+            },
+            "bags": [
+              {
+                "weight": {
+                  "value": 20
+                }
+              }
+            ]
+          }
+        ],
+        "handBagTiers": [
+          {
+            "tierPrice": {
+              "amount": "30.24"
+            },
+            "bags": [
+              {
+                "weight": {
+                  "value": 10
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "bookingOptions": {
+        "edges": [
+          {
+            "node": {
+              "token": "Hwa3oiYNzxO3-NJsnys43QdLp9jqzaurjZc5XqEviK26rV_m5coasfcoE_wlrtaUPXLozEWFhVoXqSwTkjlgsJn8U-BQGbTG3vKY_xtHV5AIY2WkmREXjDvQU_7eItOVkhyKU-E6aFgmEXuJO-S32y5bhgLibjYmzvBSVJnnLZa-wkcC5rWvAzK-5BGt2xo2sHpapr5gprBmAbw-nw4Xk195D6KXeZJ9OCKJWu0QW_RX6cW6x3YmBTfIRsRMueCM6EWYrKIPXk8PHma1qdkq2Oo22aaw3ru3hddqfZvdvpVQ4oB3V4fWzh9J6JCd941_M018iVjXaTggIeEel6Lo_LCMH0j28S4g3iIDf106tr9jWmpdFxL6GvPPos9fji0IcEs7Ea7-NJw3tPdpuZcWLGRHRJXgvrXh9onJRWd_1hDDICGYm39oxliyCHzXlrPwZFH7nyD6b7umv9fllIzgtulyUnAVUeunQvqCL3sRfWGWLO453yV8Jx8VxH1yZieUv3oUVSjv8z-d0D5dzjiJCJ4Z-9AOIuRgNQOUnjmWh8b8N309bDZfkO4dT8-ygLRQt6JoJ-NNoIEnsPX4S8x5Rd1ILUxtdkwOPUR8XkVjvq3uNsijylzLkVEWSSLuiEAKOVK2C0jjcD1PNPfRfRuiJTHn2-kjIYi8SIs28HDwHIy5HZztVU1Dna6FSW_2yg1yDhwWPYC2vYbhbVY5YgJWHtetlE6YL8VrbkWuPvhryeOwfQYxiuNLQREEL3Ax3dU_hXFGOowYqND-kwH6KuqovaFybGVJF2m32Hu26XbEOMp62Fxa7QLHjC7AMmtN2a83OXI9jLuSHUK2SjciceYPaoX33legGOJXSTgBB7MsL-rGxYxWPa3IVD-gvOhcy0Sm-DF1ncKihRuOYNme6prWdAR1Pni7n6b2cQyLkqCHAUVZQ7Myv8mOHgyZmKb68MrCj",
+              "bookingUrl": "/en/booking/?direct=true&locale=en&currency=usd&passengers=1-0-0&token=Hwa3oiYNzxO3-NJsnys43QdLp9jqzaurjZc5XqEviK26rV_m5coasfcoE_wlrtaUPXLozEWFhVoXqSwTkjlgsJn8U-BQGbTG3vKY_xtHV5AIY2WkmREXjDvQU_7eItOVkhyKU-E6aFgmEXuJO-S32y5bhgLibjYmzvBSVJnnLZa-wkcC5rWvAzK-5BGt2xo2sHpapr5gprBmAbw-nw4Xk195D6KXeZJ9OCKJWu0QW_RX6cW6x3YmBTfIRsRMueCM6EWYrKIPXk8PHma1qdkq2Oo22aaw3ru3hddqfZvdvpVQ4oB3V4fWzh9J6JCd941_M018iVjXaTggIeEel6Lo_LCMH0j28S4g3iIDf106tr9jWmpdFxL6GvPPos9fji0IcEs7Ea7-NJw3tPdpuZcWLGRHRJXgvrXh9onJRWd_1hDDICGYm39oxliyCHzXlrPwZFH7nyD6b7umv9fllIzgtulyUnAVUeunQvqCL3sRfWGWLO453yV8Jx8VxH1yZieUv3oUVSjv8z-d0D5dzjiJCJ4Z-9AOIuRgNQOUnjmWh8b8N309bDZfkO4dT8-ygLRQt6JoJ-NNoIEnsPX4S8x5Rd1ILUxtdkwOPUR8XkVjvq3uNsijylzLkVEWSSLuiEAKOVK2C0jjcD1PNPfRfRuiJTHn2-kjIYi8SIs28HDwHIy5HZztVU1Dna6FSW_2yg1yDhwWPYC2vYbhbVY5YgJWHtetlE6YL8VrbkWuPvhryeOwfQYxiuNLQREEL3Ax3dU_hXFGOowYqND-kwH6KuqovaFybGVJF2m32Hu26XbEOMp62Fxa7QLHjC7AMmtN2a83OXI9jLuSHUK2SjciceYPaoX33legGOJXSTgBB7MsL-rGxYxWPa3IVD-gvOhcy0Sm-DF1ncKihRuOYNme6prWdAR1Pni7n6b2cQyLkqCHAUVZQ7Myv8mOHgyZmKb68MrCj&searchType=oneWay&searchBags=1.0",
+              "trackingPixel": "https://www.kiwi.com/pixel?affilid=skypicker&currency=USD&flightsId=032d1ddc50540000dbe70a6f_0&from=STN&lang=en&passengers=1&searchBags=1.0&to=DBV&booking_token=Hwa3oiYNzxO3-NJsnys43QdLp9jqzaurjZc5XqEviK26rV_m5coasfcoE_wlrtaUPXLozEWFhVoXqSwTkjlgsJn8U-BQGbTG3vKY_xtHV5AIY2WkmREXjDvQU_7eItOVkhyKU-E6aFgmEXuJO-S32y5bhgLibjYmzvBSVJnnLZa-wkcC5rWvAzK-5BGt2xo2sHpapr5gprBmAbw-nw4Xk195D6KXeZJ9OCKJWu0QW_RX6cW6x3YmBTfIRsRMueCM6EWYrKIPXk8PHma1qdkq2Oo22aaw3ru3hddqfZvdvpVQ4oB3V4fWzh9J6JCd941_M018iVjXaTggIeEel6Lo_LCMH0j28S4g3iIDf106tr9jWmpdFxL6GvPPos9fji0IcEs7Ea7-NJw3tPdpuZcWLGRHRJXgvrXh9onJRWd_1hDDICGYm39oxliyCHzXlrPwZFH7nyD6b7umv9fllIzgtulyUnAVUeunQvqCL3sRfWGWLO453yV8Jx8VxH1yZieUv3oUVSjv8z-d0D5dzjiJCJ4Z-9AOIuRgNQOUnjmWh8b8N309bDZfkO4dT8-ygLRQt6JoJ-NNoIEnsPX4S8x5Rd1ILUxtdkwOPUR8XkVjvq3uNsijylzLkVEWSSLuiEAKOVK2C0jjcD1PNPfRfRuiJTHn2-kjIYi8SIs28HDwHIy5HZztVU1Dna6FSW_2yg1yDhwWPYC2vYbhbVY5YgJWHtetlE6YL8VrbkWuPvhryeOwfQYxiuNLQREEL3Ax3dU_hXFGOowYqND-kwH6KuqovaFybGVJF2m32Hu26XbEOMp62Fxa7QLHjC7AMmtN2a83OXI9jLuSHUK2SjciceYPaoX33legGOJXSTgBB7MsL-rGxYxWPa3IVD-gvOhcy0Sm-DF1ncKihRuOYNme6prWdAR1Pni7n6b2cQyLkqCHAUVZQ7Myv8mOHgyZmKb68MrCj",
+              "itineraryProvider": {
+                "code": "KIWI",
+                "name": "Kiwi.com",
+                "subprovider": null,
+                "hasHighProbabilityOfPriceChange": false,
+                "contentProvider": {
+                  "code": "KIWI"
+                },
+                "id": "ItineraryProvider:KIWI"
+              },
+              "price": {
+                "amount": "77.729439"
+              }
+            }
+          }
+        ]
+      },
+      "travelHack": {
+        "isTrueHiddenCity": false,
+        "isVirtualInterlining": false,
+        "isThrowawayTicket": false
+      },
+      "legacyId": "032d1ddc50540000dbe70a6f_0",
+      "sector": {
+        "id": "Sector:5cf3bf5839755977d4cc443c27abbb07ecd60e9d~5cf3bf5839755977d4cc443c27abbb07ecd60e9d",
+        "sectorSegments": [
+          {
+            "guarantee": null,
+            "segment": {
+              "id": "Segment:5cf3bf5839755977d4cc443c27abbb07ecd60e9d",
+              "source": {
+                "localTime": "2026-04-21T16:30:00",
+                "utcTime": "2026-04-21T15:30:00",
+                "station": {
+                  "id": "Station:airport:STN",
+                  "legacyId": "STN",
+                  "name": "London Stansted",
+                  "code": "STN",
+                  "type": "AIRPORT",
+                  "gps": {
+                    "lat": 51.885,
+                    "lng": 0.23500000000000001
+                  },
+                  "city": {
+                    "legacyId": "london_gb",
+                    "name": "London",
+                    "id": "City:london_gb"
+                  },
+                  "country": {
+                    "code": "GB",
+                    "id": "Country:GB"
+                  }
+                }
+              },
+              "destination": {
+                "localTime": "2026-04-21T20:05:00",
+                "utcTime": "2026-04-21T18:05:00",
+                "station": {
+                  "id": "Station:airport:DBV",
+                  "legacyId": "DBV",
+                  "name": "Dubrovnik",
+                  "code": "DBV",
+                  "type": "AIRPORT",
+                  "gps": {
+                    "lat": 42.5613889,
+                    "lng": 18.2683333
+                  },
+                  "city": {
+                    "legacyId": "dubrovnik_hr",
+                    "name": "Dubrovnik",
+                    "id": "City:dubrovnik_hr"
+                  },
+                  "country": {
+                    "code": "HR",
+                    "id": "Country:HR"
+                  }
+                }
+              },
+              "duration": 9300,
+              "type": "FLIGHT",
+              "code": "5967",
+              "carrier": {
+                "id": "Carrier:11",
+                "name": "Ryanair",
+                "code": "FR"
+              },
+              "operatingCarrier": {
+                "id": "Carrier:1687",
+                "name": "Buzz",
+                "code": "RR"
+              },
+              "cabinClass": "ECONOMY",
+              "hiddenDestination": null,
+              "throwawayDestination": null
+            },
+            "layover": null
+          }
+        ],
+        "duration": 9300
+      },
+      "lastAvailable": {
+        "seatsLeft": 3
+      }
+    }
+  ]
+}

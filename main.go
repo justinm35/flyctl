@@ -104,7 +104,6 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.screenSearch.loading = false
 		m.focusedPane = 1
 		m.screenResults.offers = msg.offers
-		// Store the data here
 		StoreData("allOffers", msg.offers)
 		m.screenResults.buildTable(m.width)
 		m.screen = screenResults
